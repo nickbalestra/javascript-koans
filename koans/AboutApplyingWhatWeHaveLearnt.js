@@ -112,11 +112,32 @@ describe("About Applying What We Have Learnt", function() {
 
   /*********************************************************************************/
   /* UNCOMMENT FOR EXTRA CREDIT */
-  /*
+
   it("should find the largest prime factor of a composite number", function () {
 
-  });
+    var factors = function(compositeNumber){
+      var results = [];
+      var i;
+      var max = compositeNumber / 2;
+      for(i = 2; i <= max ; i++) {
+        if (compositeNumber % i === 0) {
+          results.push(i);
+        }
+      }
+      return results;
+    };
 
+    var isPrime = function(n) {
+      return factors(n).length === 0;
+    }
+
+    var largestPrime = function(n) {
+      return factors(n).filter(isPrime).pop();
+    }
+
+    expect(largestPrime(21)).toBe(7);
+  });
+  /*
   it("should find the largest palindrome made from the product of two 3 digit numbers", function () {
 
   });
