@@ -186,9 +186,34 @@ describe("About Applying What We Have Learnt", function() {
 
     expect(difference([2,3,4])).toBe(52);
   });
-  /*
-  it("should find the 10001st prime", function () {
 
+  it("should find the 10001st prime", function () {
+    var factors = function(compositeNumber){
+      var results = [];
+      var i;
+      var max = compositeNumber / 2;
+      for(i = 2; i <= max ; i++) {
+        if (compositeNumber % i === 0) {
+          results.push(i);
+        }
+      }
+      return results;
+    };
+
+    var isPrime = function(n) {
+      return factors(n).length === 0;
+    }
+
+    var primes = [];
+    var count = 2;
+    while(primes.length < 10001) {
+      if (isPrime(count)) {
+        primes.push(count);
+      }
+      count++;
+    };
+
+    expect(primes.pop()).toBe(104743);
   });
-  */
+
 });
