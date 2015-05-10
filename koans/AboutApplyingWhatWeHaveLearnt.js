@@ -137,11 +137,21 @@ describe("About Applying What We Have Learnt", function() {
 
     expect(largestPrime(21)).toBe(7);
   });
-  /*
+
   it("should find the largest palindrome made from the product of two 3 digit numbers", function () {
+    // A alindrome is a word, or a number, that can be read both from head to end and from end to head
+    var isPalindrome = function(number) {
+      var toTest = number.toString();
+      for (var i = 0; i < Math.floor(toTest.length / 2); i++)
+        if (toTest[i] !== toTest[toTest.length - 1 - i]) {
+          return false;
+        }
+      return true;
+    }
 
+    expect(isPalindrome(111 * 222)).toBe(true);
   });
-
+  /*
   it("should find the smallest number divisible by each of the numbers 1 to 20", function () {
 
 
