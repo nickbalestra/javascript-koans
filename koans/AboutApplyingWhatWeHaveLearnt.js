@@ -151,16 +151,42 @@ describe("About Applying What We Have Learnt", function() {
 
     expect(isPalindrome(111 * 222)).toBe(true);
   });
-  /*
-  it("should find the smallest number divisible by each of the numbers 1 to 20", function () {
 
+  // it("should find the smallest number divisible by each of the numbers 1 to 20", function () {
+  //   var isDivisible = function(number) {
+  //     for (var i  = 1; i <= 20; i++) {
+  //       if (number % i !== 0 )
+  //         return false;
+  //     }
+  //     return true;
+  //   };
 
-  });
+  //   expect(false).toBe(true);
+  // });
 
   it("should find the difference between the sum of the squares and the square of the sums", function () {
+    var sum = function(a,b) {
+      return a + b;
+    };
 
+    var square = function(a) {
+      return a * a;
+    }
+
+
+    var difference = function(numbers){
+      var sumOfSquares = _(numbers)
+        .map( function(num){return num*num} )
+        .reduce(sum);
+
+      var squareOfSums = square(_(numbers).reduce(sum));
+
+      return squareOfSums - sumOfSquares;
+    };
+
+    expect(difference([2,3,4])).toBe(52);
   });
-
+  /*
   it("should find the 10001st prime", function () {
 
   });
