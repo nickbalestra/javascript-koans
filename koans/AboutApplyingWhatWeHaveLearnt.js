@@ -100,14 +100,24 @@ describe("About Applying What We Have Learnt", function() {
     var test = _(products).chain()
       .map( function(item){ return item.ingredients; } )
       .flatten()
-      // TODO try to reduce instead as suggested
       .each(function (ingredient) {
                 ingredientCount[ingredient] = (ingredientCount[ingredient] || 0) + 1;
               })
       .value();
 
-
     expect(ingredientCount['mushrooms']).toBe(2);
+
+      // reduced version - try to reduce instead as each
+      var tester = _(products).chain()
+        .map( function(item){ return item.ingredients; } )
+        .flatten()
+        .reduce(function(ingredientCount, ingredient){
+          ingredientCount[ingredient] = (ingredientCount[ingredient] || 0) + 1;
+          return ingredientCount;
+        }, {})
+        .value();
+
+    expect(tester['mushrooms']).toBe(2);
   });
 
   /*********************************************************************************/
