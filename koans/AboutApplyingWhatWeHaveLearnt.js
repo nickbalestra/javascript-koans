@@ -93,11 +93,11 @@ describe("About Applying What We Have Learnt", function() {
     expect(ingredientCount['mushrooms']).toBe(2);
   });
 
-  it("should count the ingredient occurrence (functional)", function () {
+  it("should count the ingredient occurrence (functional using each)", function () {
     var ingredientCount = { "{ingredient name}": 0 };
 
     /* chain() together map(), flatten() and reduce() */
-    var test = _(products).chain()
+    var count = _(products).chain()
       .map( function(item){ return item.ingredients; } )
       .flatten()
       .each(function (ingredient) {
@@ -106,9 +106,13 @@ describe("About Applying What We Have Learnt", function() {
       .value();
 
     expect(ingredientCount['mushrooms']).toBe(2);
+  });
 
-      // reduced version - try to reduce instead as each
-      var tester = _(products).chain()
+  // reduced version - try to reduce instead as each
+  it("should count the ingredient occurrence (functional using reduce)", function () {
+    var ingredientCount = { "{ingredient name}": 0 };
+
+      var count = _(products).chain()
         .map( function(item){ return item.ingredients; } )
         .flatten()
         .reduce(function(ingredientCount, ingredient){
@@ -117,7 +121,7 @@ describe("About Applying What We Have Learnt", function() {
         }, {})
         .value();
 
-    expect(tester['mushrooms']).toBe(2);
+    expect(count['mushrooms']).toBe(2);
   });
 
   /*********************************************************************************/
