@@ -139,7 +139,7 @@ describe("About Applying What We Have Learnt", function() {
   });
 
   it("should find the largest palindrome made from the product of two 3 digit numbers", function () {
-    // A alindrome is a word, or a number, that can be read both from head to end and from end to head
+    // A palindrome is a word, or a number, that can be read both from head to end and from end to head
     var isPalindrome = function(number) {
       var toTest = number.toString();
       for (var i = 0; i < Math.floor(toTest.length / 2); i++)
@@ -147,22 +147,25 @@ describe("About Applying What We Have Learnt", function() {
           return false;
         }
       return true;
-    }
+    };
 
-    expect(isPalindrome(111 * 222)).toBe(true);
+    var largest = function(){
+      for(var i = 999; i > 99; i--) {
+        for(var j = 999; j > 99; j--) {
+          if (isPalindrome(i*j)){
+            return {  "firstNumber" : i,
+                      "secondNumber": j,
+                      "palindrome": i*j
+                    };
+          }
+        }
+      }
+    };
+
+    expect(largest().palindrome).toBe(580085);
   });
 
-  // it("should find the smallest number divisible by each of the numbers 1 to 20", function () {
-  //   var isDivisible = function(number) {
-  //     for (var i  = 1; i <= 20; i++) {
-  //       if (number % i !== 0 )
-  //         return false;
-  //     }
-  //     return true;
-  //   };
 
-  //   expect(false).toBe(true);
-  // });
 
   it("should find the difference between the sum of the squares and the square of the sums", function () {
     var sum = function(a,b) {
@@ -188,6 +191,8 @@ describe("About Applying What We Have Learnt", function() {
   });
 
   it("should find the 10001st prime", function () {
+  // Useful resource to have some data to check against: https://primes.utm.edu/nthprime
+
     var factors = function(compositeNumber){
       var results = [];
       var i;
