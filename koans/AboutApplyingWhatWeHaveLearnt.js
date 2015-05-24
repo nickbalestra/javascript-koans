@@ -278,10 +278,9 @@ describe("About Applying What We Have Learnt", function() {
 
 
     // 2 - Initially, let p equal 2, the first prime number.
-    //var p = 2;
     // 3 - Starting from p, enumerate its multiples by counting to n in increments of p, and mark them in the list
     // (these will be 2p, 3p, 4p, ... ; the p itself should not be marked).
-    var enumerate = function(list, p) {
+    var sieve = function(list, p) {
       var output = [];
 
       list.forEach(function(el){
@@ -298,7 +297,7 @@ describe("About Applying What We Have Learnt", function() {
       var index = output.indexOf(p);
 
       if ( output[index + 1] !== undefined ) {
-        return enumerate(output, output[index + 1]);
+        return sieve(output, output[index + 1]);
       } else {
         return output;
       };
@@ -306,7 +305,7 @@ describe("About Applying What We Have Learnt", function() {
     };
 
     var integers = range(105000);
-    var primes = enumerate(integers, 2);
+    var primes = sieve(integers, 2);
 
     expect(primes[10000]).toBe(104743);
 
