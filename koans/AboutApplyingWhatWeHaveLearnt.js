@@ -179,8 +179,6 @@ describe("About Applying What We Have Learnt", function() {
     expect(largest().palindrome).toBe(580085);
   });
 
-
-
   it("should find the difference between the sum of the squares and the square of the sums", function () {
     var sum = function(a,b) {
       return a + b;
@@ -204,6 +202,7 @@ describe("About Applying What We Have Learnt", function() {
     expect(difference([2,3,4])).toBe(52);
   });
 
+  /*
   it("should find the 10001st prime", function () {
   // Useful resource to have some data to check against: https://primes.utm.edu/nthprime
 
@@ -233,6 +232,84 @@ describe("About Applying What We Have Learnt", function() {
     };
 
     expect(primes.pop()).toBe(104743);
+  });
+  */
+
+  it("should find the 10001st prime - Slightly Optimized version", function () {
+  // Useful resource to have some data to check against: https://primes.utm.edu/nthprime
+
+    var isPrime = function(num){
+      var results = [];
+      var i;
+      var max = num / 2;
+      for(i = 2; i <= max ; i++) {
+        if (num % i === 0) {
+          return false;
+        }
+      }
+      return true;
+    };
+
+
+    var primes = [];
+    var count = 2;
+    while(primes.length < 10001) {
+      if (isPrime(count)) {
+        primes.push(count);
+      }
+      count++;
+    };
+
+    expect(primes.pop()).toBe(104743);
+  });
+
+  it("should find the 10001st prime - Sieve of Eratosthenes algorithm implementation", function () {
+  // Useful resource to have some data to check against: https://primes.utm.edu/nthprime
+  // About the Sieve of Eratosthenes: http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
+
+    // 1 - Create a list of consecutive integers from 2 through n: (2, 3, 4, ..., n).
+    var range = function(n) {
+      var output = [];
+      for (var i = 2; i <= n; i++) {
+        output.push(i);
+      }
+      return output;
+    }
+
+
+    // 2 - Initially, let p equal 2, the first prime number.
+    //var p = 2;
+    // 3 - Starting from p, enumerate its multiples by counting to n in increments of p, and mark them in the list
+    // (these will be 2p, 3p, 4p, ... ; the p itself should not be marked).
+    var enumerate = function(list, p) {
+      var output = [];
+
+      list.forEach(function(el){
+        if (el === p) {
+          output.push(el);
+        } else if (el % p !== 0) {
+          output.push(el);
+        }
+      });
+
+      // 4 - Find the first number greater than p in the list that is not marked.
+      // If there was no such number, stop.
+      // Otherwise, let p now equal this new number (which is the next prime), and repeat from step 3.
+      var index = output.indexOf(p);
+
+      if ( output[index + 1] !== undefined ) {
+        return enumerate(output, output[index + 1]);
+      } else {
+        return output;
+      };
+
+    };
+
+    var integers = range(105000);
+    var primes = enumerate(integers, 2);
+
+    expect(primes[10000]).toBe(104743);
+
   });
 
 });
