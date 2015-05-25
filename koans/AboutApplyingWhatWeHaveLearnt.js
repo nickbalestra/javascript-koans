@@ -235,7 +235,7 @@ describe("About Applying What We Have Learnt", function() {
   });
   */
 
-  it("should find the 10001st prime - Slightly Optimized version", function () {
+  it("should find the 10001st prime using a trial division algorithm", function () {
   // Useful resource to have some data to check against: https://primes.utm.edu/nthprime
 
     var isPrime = function(num){
@@ -266,7 +266,7 @@ describe("About Applying What We Have Learnt", function() {
     expect(nthPrime(10001)).toBe(104743);
   });
 
-  it("should find the 10001st prime - Sieve of Eratosthenes algorithm implementation", function () {
+  it("should find the 10001st prime using a minimal sieve of Eratosthenes algorithm", function () {
   // Useful resource to have some data to check against: https://primes.utm.edu/nthprime
   // About the Sieve of Eratosthenes: http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
 
@@ -311,7 +311,7 @@ describe("About Applying What We Have Learnt", function() {
     expect(sieve(range(66000))[1000]).toBe(7927);
   });
 
-  it("should find the 10001st prime - Sieve of Eratosthenes algorithm implementation - Optmized", function () {
+  it("should find the 10001st prime using an optmized sieve of Eratosthenes algorithm", function () {
   // Useful resource to have some data to check against: https://primes.utm.edu/nthprime
   // About the Sieve of Eratosthenes: http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
 
