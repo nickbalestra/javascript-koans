@@ -250,24 +250,27 @@ describe("About Applying What We Have Learnt", function() {
       return true;
     };
 
+    var nthPrime = function(nth){
+      var primes = [];
+      var count = 2;
+      while(primes.length < nth) {
+        if (isPrime(count)) {
+          primes.push(count);
+        }
+        count++;
+      };
+      return primes.pop();
+    }
 
-    var primes = [];
-    var count = 2;
-    while(primes.length < 10001) {
-      if (isPrime(count)) {
-        primes.push(count);
-      }
-      count++;
-    };
 
-    expect(primes.pop()).toBe(104743);
+    expect(nthPrime(10001)).toBe(104743);
   });
 
   it("should find the 10001st prime - Sieve of Eratosthenes algorithm implementation", function () {
   // Useful resource to have some data to check against: https://primes.utm.edu/nthprime
   // About the Sieve of Eratosthenes: http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
 
-    // 1 - Create a list of consecutive integers from 2 through n: (2, 3, 4, ..., n).
+    // STEP 1 - Create a list of consecutive integers from 2 through n: (2, 3, 4, ..., n).
     var range = function(n) {
       var output = [];
       for (var i = 2; i <= n; i++) {
@@ -276,39 +279,91 @@ describe("About Applying What We Have Learnt", function() {
       return output;
     }
 
-
-    // 2 - Initially, let p equal 2, the first prime number.
-    // 3 - Starting from p, enumerate its multiples by counting to n in increments of p, and mark them in the list
-    // (these will be 2p, 3p, 4p, ... ; the p itself should not be marked).
     var sieve = function(list, p) {
-      var output = [];
+      var sieved = list;
 
-      list.forEach(function(el){
-        if (el === p) {
-          output.push(el);
-        } else if (el % p !== 0) {
-          output.push(el);
+      // STEP 2 - Initially, let p equal 2, the first prime number.
+      p = p || 2;
+
+      // STEP 3 - Starting from p, enumerate its multiples by counting to n in increments of p, and mark them in the list
+      // (these will be 2p, 3p, 4p, ... ; the p itself should not be marked).
+      var init = 2*p;
+      var n = sieved[sieved.length - 1];
+      for (var i = init; i <= n; i += p ) {
+        if (sieved.indexOf(i) !== -1 ) {
+          sieved.splice(sieved.indexOf(i), 1);
         }
-      });
+      }
 
       // 4 - Find the first number greater than p in the list that is not marked.
+      var nextToBeSieved = sieved[sieved.indexOf(p) + 1]
+
       // If there was no such number, stop.
       // Otherwise, let p now equal this new number (which is the next prime), and repeat from step 3.
-      var index = output.indexOf(p);
-
-      if ( output[index + 1] !== undefined ) {
-        return sieve(output, output[index + 1]);
+      if ( nextToBeSieved ) {
+        return sieve(sieved, nextToBeSieved);
       } else {
-        return output;
-      };
+        return sieved;
+      }
 
     };
 
-    var integers = range(105000);
-    var primes = sieve(integers, 2);
+    expect(sieve(range(66000))[1000]).toBe(7927);
+  });
 
-    expect(primes[10000]).toBe(104743);
+  it("should find the 10001st prime - Sieve of Eratosthenes algorithm implementation - Optmized", function () {
+  // Useful resource to have some data to check against: https://primes.utm.edu/nthprime
+  // About the Sieve of Eratosthenes: http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
 
+    // STEP 1 - Create a list of consecutive integers from 2 through n: (2, 3, 4, ..., n).
+    var range = function(n) {
+      var output = [2];
+      for (var i = 3; i <= n; i += 2) {
+        output.push(i);
+      }
+      return output;
+    }
+
+    var sieve = function(list, p) {
+      var sieved = list;
+
+      // STEP 2 - Initially, let p equal 2, the first prime number.
+      p = p || 3;
+
+      // STEP 3 - Starting from p, enumerate its multiples by counting to n in increments of p, and mark them in the list
+      // (these will be 2p, 3p, 4p, ... ; the p itself should not be marked).
+      //
+      // As a refinement, it is sufficient to mark the numbers in step 3 starting from p^2,
+      // as all the smaller multiples of p will have already been marked at that point.
+      // This means that the algorithm is allowed to terminate in step 4 when p^2 is greater than n
+      var init = p*p;
+      var n = sieved[sieved.length - 1];
+
+      for (var i = init; i <= n; i += (p*2) ) {
+        if (sieved.indexOf(i) !== -1 ) {
+          sieved.splice(sieved.indexOf(i), 1);
+        }
+      }
+      //return list;
+      // STEP 4 - Find the first number greater than p in the list that is not marked.
+      var nextToBeSieved = sieved[sieved.indexOf(p) + 1]
+
+      // If there was no such number, stop.
+      // Otherwise, let p now equal this new number (which is the next prime), and repeat from step 3.
+      if (p*p > n) {
+        return sieved;
+      } else if ( nextToBeSieved ) {
+        return sieve(sieved, nextToBeSieved);
+      } else {
+        return sieved;
+      }
+
+    };
+
+    expect(sieve(range(105000))[10000]).toBe(104743);
+    // this optimized sieve algo managed to don't excess the call stack even when
+    // tested on a range(1000000), sieving 78498 primes.
+    // for larger bases is recomended to paginate the sieve algo.
   });
 
 });
