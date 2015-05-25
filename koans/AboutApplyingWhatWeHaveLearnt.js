@@ -241,8 +241,8 @@ describe("About Applying What We Have Learnt", function() {
     var isPrime = function(num){
       var results = [];
       var i;
-      var max = num / 2;
-      for(i = 2; i <= max ; i++) {
+      var squareRoot = Math.sqrt(num);
+      for(i = 2; i <= squareRoot ; i++) {
         if (num % i === 0) {
           return false;
         }
